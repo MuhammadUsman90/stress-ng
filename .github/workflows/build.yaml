@@ -3,7 +3,7 @@ name: Docker Image CI
 on:
   push:
     branches:
-      - '*'
+      - master
     tags:
       - '*'
 
@@ -70,11 +70,8 @@ jobs:
       id: build-push
       uses: docker/build-push-action@v2
       with:
+        context: .
         build-args: VERSION=${{ steps.tagger.outputs.tag }}
         platforms: linux/amd64,linux/arm64
-        tags: |
-         ${{ steps.nomenclator.outputs.name }}:${{ steps.tagger.outputs.tag }}
-         ${{ steps.nomenclator.outputs.name }}:latest
-         ghcr.io/${{ github.repository }}:${{ steps.tagger.outputs.tag }}
-         ghcr.io/${{ github.repository }}:latest
+        tags: maan90/stress-ng:latest
         push: true
